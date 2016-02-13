@@ -4,6 +4,7 @@
  * Module dependencies.
  */
 
+console.log("starting up APP **");
 var app = require('../app');
 var debug = require('debug')('bath_hackathon:server');
 var http = require('http');
