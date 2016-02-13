@@ -81,13 +81,19 @@
         L.geoJson(wardsadd).addTo(wards);
     });
 
+  var bins = new L.LayerGroup();
+    $.getJSON('./data/banes_park_litter_bin.geojson', function (binsadd)  {
+        L.geoJson(binsadd).addTo(bins);
+    });
+
   var baselayers = {
-    "Bse map" : osm
+    "Base map" : osm
   };
 
   var overlays = {
     "Wards" : wards,
-    "Parks" : parks
+    "Amenity grass areas" : parks,
+    "Litter bins" : bins
   };
 
 //    var map = L.map('map',
