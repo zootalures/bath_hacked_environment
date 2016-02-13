@@ -19,6 +19,8 @@
   "dependencies": {
     "open-street-map": "^0.0.4",
     "leaflet": "^0.7.7",
-    "Chart.js": "chartjs#^1.0.2"
+    "Chart.js": "chartjs#^1.0.2",
+    "angular-ui-bootstrap": "ui-bootstrap#^1.1.2",
+    "angular-route": "^1.5.0"
   }
 }
