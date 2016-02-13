@@ -3,24 +3,57 @@
 <head><title>Express</title>
     <link rel="stylesheet" href="/stylesheets/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css"/>
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="/bower_components/Chart.js/Chart.min.js"></script>
+    <script src="/bower_components/Chart.HorizontalBar.js/Chart.HorizontalBar.js"></script>
     <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
     <script language="Javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
-<div class="container-fluid ">
-    <div class="row-fluid">
-        <div class="col">left content</div>
-        <div class="span6"> <div id="map" style="height:300px"></div></div>
+<div class="container">
+    <h2>Local Environment Beastie</h2>
+
+    <div class="row">
+        <div class="column col-md-6"><img src="/blobs/blob_high_base.png">
+            <img style="position:absolute; left :0px;" src="/blobs/sound_high-01.png"></div>
+        <div class="column col-md-6">
+            <div id="map" style="height:500px"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column col-md-4"><h3>Score</h3>
+
+            <div id="score_chart"></div>
+
+            <script>
+//                var ctx = document.getElementById("score_chart").getContext("2d");
+//                var myNewChart = new Chart(ctx).HorizontalBar({
+//                    labels: ["Air Quality", "Litter", "Noise", "Health"],
+//                    datasets: [{
+//                        label: "test dataset",
+//                        data : [1, 20, -3 , 1]
+//                    }]});
+            </script>
+        </div>
+        <div class="column col-md-4"><h3>Events</h3>
+            <ul>
+                <li> @someUser organised a litter cleanup</li>
+            </ul>
+        </div>
+        <div class="column col-md-4"><h3>Suggestions</h3>
+            <ul>
+                <li></li>
+            </ul>
+        </div>
+
     </div>
 </div>
 
 <script>
-    var map = L.map('map').setView([51.3755228,-2.375885], 13);
-
-    var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-    var osmAttrib='Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+    var map = L.map('map').setView([51.3755228, -2.375885], 13);
+    var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
     var osm = new L.TileLayer(osmUrl, {minZoom: 8, maxZoom: 20, attribution: osmAttrib});
     map.addLayer(osm);
 </script>
