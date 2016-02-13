@@ -65,16 +65,40 @@
 
 <script>
     var map = L.map('map').setView([51.3755228, -2.375885], 13);
+
     var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
     var osm = new L.TileLayer(osmUrl, {minZoom: 8, maxZoom: 20, attribution: osmAttrib});
 
-    map.addLayer(osm);
 
-    $.getJSON('./data/banes_gss_amenity_grass.geojson', function (data)  {
-        L.geoJson(data).addTo(map);
+  var parks = new L.LayerGroup();
+
+    $.getJSON('./data/banes_gss_amenity_grass.geojson', function (parkadd)  {
+        L.geoJson(parkadd).addTo(parks);
     });
 
+  var wards = new L.LayerGroup();
+    $.getJSON('./data/ons_census_2011_ward.geojson', function (wardsadd)  {
+        L.geoJson(wardsadd).addTo(wards);
+    });
+
+  var baselayers = {
+    "Bse map" : osm
+  };
+
+  var overlays = {
+    "Wards" : wards,
+    "Parks" : parks
+  };
+
+//    var map = L.map('map',
+//      { center: [51.3755228, -2.375885],
+//        zoom: 13,
+//        layers: [baselayers,overlays]
+//      });
+    map.addLayer(osm);
+
+  L.control.layers(baselayers, overlays).addTo(map);
 
 </script>
 </body>
