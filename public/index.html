@@ -5,8 +5,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css"/>
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
-    <script src="/bower_components/Chart.js/Chart.min.js"></script>
-    <script src="/bower_components/Chart.HorizontalBar.js/Chart.HorizontalBar.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
     <!--  <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script> -->
     <script src="/bower_components/leaflet/dist/leaflet-src.js"></script>
     <script language="Javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -17,7 +17,8 @@
 
     <div class="row">
         <div class="column col-md-6"><img src="/blobs/blob_high_base.png">
-            <!--<img style="position:absolute; left :0px;" src="/blobs/sound_high-01.png">-->
+            <img style="position:absolute; left :5px;" src="/blobs/CO2_low-03.png">
+            <img style="position:absolute; left :0px;" src="/blobs/sound_high-01.png">
         </div>
         <div class="column col-md-6">
             <div id="map" style="height:500px"></div>
@@ -26,36 +27,34 @@
     <div class="row">
         <div class="column col-md-6"><h3>Stats</h3>
             <a class="button btn-xs"> Compare</a>
-            <canvas id="score_chart"></canvas>
-            <script>
-                var ctx = document.getElementById("score_chart").getContext("2d");
-                var myNewChart = new Chart(ctx).HorizontalBar({
-                    labels: ["Carbon Footprint", "Air Quality", "Litter", "Noise", "Green Spaces"],
-                    datasets: [{
-                        label: "Now",
-                        data: [3, 1, 20, 0, 1]
-                    },
-                        {
-                            label: "test dataset",
-                            data: [2, 0.5, 15, 0, 1]
-                        }]
-                });
-            </script>
+
+            <div id="score_chart"></div>
+
         </div>
         <div class="column col-md-6">
-            <h3>Current Challenges</h3>
+            <h4>Current Challenges</h4>
             <ul>
-                <li>5 people are currently doing the <a href="">Tweet in the Park </a> challenge <a href="">Join In!</a>
+                <li>5 people are currently doing the <a href="tweet_in_the_park.html">Tweet in the Park </a> challenge <a  class="button btn-xs" href="tweet_in_the_park.html">Join
+                    In!</a>
                 </li>
-                <li>50 households are trying to <a href="">Reduce their carbon footprint</a>, <a href="">Join In!</a>
+
+                <li>50 households are trying to <a href="">Reduce their carbon footprint</a>, <a href="">Join
+                    In!</a>
                 </li>
                 <li>25 housholds are trying to <a href="">Recycle More</a>, <a href="">Join In!</a></li>
                 <li>25 housholds are trying to <a href="">Recycle More</a>, <a href="">Join In!</a></li>
             </ul>
-            <h3>Start a new Challenge</h3>
+            <h4>Completed Challenges</h4>
+            <h5>Last Month</h5>
+            <ul>
+                <li> 10 people joined in the <a href="">These Boots are Made for Walking</a> challenge</li>
+
+            </ul>
+            <h4>Start a new Challenge</h4>
             (Call to Action)
             <ul>
-                <li>help reduce litter with a <a href="">Litter Drive</a></li>
+                <li><b>Litter a problem?</b>help reduce litter with a <a href="">Binspection </a> challenge</li>
+                <li><b>Noisy Neighbors?</b> Reduce noise polution with the  <a href="">Shhhhh </a> Challenge</li>
             </ul>
 
         </div>
@@ -99,6 +98,37 @@
     map.addLayer(osm);
 
   L.control.layers(baselayers, overlays).addTo(map);
+
+</script>
+
+<script>
+    google.charts.load('current', {'packages': ['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+
+        var data = google.visualization.arrayToDataTable([
+            ["Aspect", "Score","Target", { role: 'style' }],
+            ['Green Spaces', 8,8.5, 'color:green'],            // RGB value
+            ['Litter', 0.5, 0.3, 'color:red'],            // English color name
+            ['Noise', 3, 2.0 , 'color:red'],
+            ['CO2', 5, 5, 'color: orange' ] // CSS-style declaration
+        ])
+
+
+        // Set chart options
+        var options = {
+            seriesType: 'bars',
+            series: {1: {type: 'scatter'}},
+            'width': 500,
+            'height': 300
+        };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.ComboChart(document.getElementById('score_chart'));
+        chart.draw(data, options);
+    }
 
 </script>
 </body>
