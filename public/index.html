@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head><title>Express</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+    <script language="Javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container-fluid ">
+    <div class="row-fluid">
+        <div class="col">left content</div>
+        <div class="span6"> <div id="map" style="height:300px"></div></div>
+    </div>
+</div>
+
+<script>
+    var map = L.map('map').setView([51.3755228,-2.375885], 13);
+
+    var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    var osmAttrib='Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+    var osm = new L.TileLayer(osmUrl, {minZoom: 8, maxZoom: 20, attribution: osmAttrib});
+    map.addLayer(osm);
+</script>
+</body>
+</html>

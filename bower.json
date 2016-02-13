@@ -1,0 +1,23 @@
+{
+  "name": "bath_hackathon",
+  "description": "Bath Hacked",
+  "main": "",
+  "authors": [
+    "Owen Cliffe <owen.cliffe@oracle.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/zootalures/bath_hacked_environment",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "open-street-map": "^0.0.4",
+    "leaflet": "^0.7.7"
+  }
+}
