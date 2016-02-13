@@ -82,7 +82,10 @@
     });
 
   var bins = new L.LayerGroup();
-    $.getJSON('./data/banes_park_litter_bin.geojson', function (binsadd)  {
+     $.getJSON('./data/banes_park_litter_bin.geojson', function (binsadd)  {
+     L.geoJson(binsadd).addTo(bins);
+    });
+    $.getJSON('./data/banes_park_dog_bin.geojson', function (binsadd)  {
         L.geoJson(binsadd).addTo(bins);
     });
 
@@ -93,7 +96,7 @@
   var overlays = {
     "Wards" : wards,
     "Amenity grass areas" : parks,
-    "Litter bins" : bins
+    "Litter and dog bins" : bins
   };
 
 //    var map = L.map('map',
