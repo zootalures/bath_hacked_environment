@@ -3,7 +3,7 @@
  */
 
 
-var app = angular.module('beastie',['ngRoute'])
+var app = angular.module('beastie',['ngRoute','leaflet-directive','chart.js'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when('/', {templateUrl: 'partials/home.html', controller:HomeController})

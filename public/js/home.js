@@ -15,7 +15,5 @@ function HomeController($scope) {
         {mate: {base: "low", co2: "low", sound:"mid"},id: 'southdown', name:'Bathavon'},
         {mate: {base: "low", co2: "low", sound:"high"},id: 'walcot', name:'Walcot'}
 
-
-
     ]
 }
