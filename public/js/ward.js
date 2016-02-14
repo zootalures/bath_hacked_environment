@@ -11,9 +11,24 @@ function WardController($scope, $http, $window) {
     $scope.scoreChart = {
         labels: ['Green Spaces', 'Litter', 'Noise', 'CO2'],
         type: 'StackedBar',
+        colors : [{
+            fillOpacity: 1,
+            fillColor: 'lightgreen',
+            strokeColor: 'lightgreen',
+            highlightFill: 'green',
+            highlightFillOpacity:1,
+            highlightStroke: 'green'
+        },{
+            fillOpacity: 1,
+            fillColor: 'blue',
+            strokeColor: 'blue',
+
+        }],
+        options : {fillOpacity: 1},
         data: [
-            [7.5, 0.4, 2.5, 5.0],
-            [2.1, 1.0, 3.0, 5.2]
+            [0.3, 0.0, 0.0, 1.0],
+            [7.5, 0.4, 2.5, 5.0]
+
         ]
     };
 

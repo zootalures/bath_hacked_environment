@@ -1,45 +1,50 @@
-<h2>{{wardName}} Environment</h2>
+<h2>{{wardName}} Sam</h2>
 
-    <div class="row">
-        <div class="column col-md-6">
-            <enviromate mate="mate" scale="500"></enviromate>
-        </div>
-        <div class="column col-md-6">
-            <div style="height:500px" id="map"></div>
-        </div>
+<div class="row">
+    <div class="column col-md-6">
+        <enviromate mate="mate" scale="500"></enviromate>
     </div>
-    <div class="row">
-        <div class="column col-md-6"><h3>Stats</h3>
-            <a class="button btn-xs"> Compare</a>
-            <canvas class="chart chart-base" chart-type="scoreChart.type" chart-data="scoreChart.data" chart-labels="scoreChart.labels"></canvas>
-        </div>
-        <div class="column col-md-6">
-            <h4>Current Challenges</h4>
-            <ul>
-                <li>5 people are participating in the the <a href="#/ward/{{wardId}}/challenges/tweet_in_the_park">Tweet in the Park </a> challenge
-                    <a class="button btn-xs" href="challenge_tweet_in_the_park.html">Join
-                        In!</a>
-                </li>
-
-                <li>50 households are trying to <a href="">Reduce their carbon footprint</a>, <a href="">Join
+    <div class="column col-md-6">
+        <div style="height:500px" id="map"></div>
+    </div>
+</div>
+<div class="row">
+    <div class="column col-md-6"><h3>Stats</h3>
+        <canvas class="chart chart-base" chart-options="scoreChart.options" chart-colours="scoreChart.colors"
+                chart-type="scoreChart.type" chart-data="scoreChart.data" chart-labels="scoreChart.labels"></canvas>
+    </div>
+    <div class="column col-md-6">
+        <h4>Current Challenges</h4>
+        <ul>
+            <li>5 people are participating in the the <a href="#/ward/{{wardId}}/challenges/tweet_in_the_park">Tweet in
+                the Park </a> challenge
+                <a class="button btn-xs" href="challenge_tweet_in_the_park.html">Join
                     In!</a>
-                </li>
-                <li>25 housholds are trying to <a href="">Recycle More</a>, <a href="">Join In!</a></li>
-                <li>25 housholds are trying to <a href="">Recycle More</a>, <a href="">Join In!</a></li>
-            </ul>
-            <h4>Completed Challenges</h4>
-            <h5>Last Month</h5>
-            <ul>
-                <li> 10 people joined in the <a href="">These Boots are Made for Walking</a> challenge</li>
+            </li>
 
-            </ul>
-            <h4>Start a new Challenge</h4>
-            (Call to Action)
-            <ul>
-                <li><b>Litter a problem?</b>help reduce litter with a <a href="">Binspection </a> challenge</li>
-                <li><b>Noisy Neighbors?</b> Reduce noise polution with the <a href="">Shhhhh </a> Challenge</li>
-            </ul>
+            <li>50 households are trying to <a href="">Reduce their carbon footprint</a>, <a href="">Join
+                In!</a>
+            </li>
+        </ul>
 
-        </div>
+        <h4>Sugggested Challenges</h4>
+        <ul>
+            <li> 5 people want to <b>reduce litter </b> in southdown with a <a href="">Binspection </a> challenge</li>
+        </ul>
+        <h4>Suggest a new Challenge</h4>
+        <ul>
+            <li><b>Bothered by student noise?</b> Reduce noise polution with the <a
+                    href="#/ward/{{wardId}}/challenges/noisy_neighbors">Noisy Neighbors</a> Challenge
+            </li>
+        </ul>
+
+        <h4>Completed Challenges</h4>
+        <h5>Last Month</h5>
+        <ul>
+            <li> 10 people joined in the <a href="">These Boots are Made for Walking</a> challenge</li>
+
+        </ul>
 
     </div>
+
+</div>
