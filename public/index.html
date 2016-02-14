@@ -74,8 +74,23 @@
 
   var parks = new L.LayerGroup();
 
+function parklabels(feature, layer) {
+//              layer.bindPopup("Here");
+//  return L.circleMarker(latlng, eqstyle).bindPopup(popupContent, popupOptions);
+  var popupContent = String(feature.properties.site_name);
+  layer.bindPopup(popupContent);
+           }
+
+function parkstyle (feature) {
+//    return {color: feature.properties.color};
+    return {color: "red"};
+  }
+
     $.getJSON('./data/banes_gss_amenity_grass.geojson', function (parkadd)  {
-        L.geoJson(parkadd).addTo(parks);
+        L.geoJson(parkadd).addTo(parks, {
+//          style: parkstyle,
+          onEachFeature: parklabels
+        });
     });
 
   var wards = new L.LayerGroup();
@@ -92,12 +107,12 @@
     });
 
 var smallIcon = new L.Icon({
-     options: {
+//     options: {
          iconSize: [27, 27],
          iconAnchor: [13, 27],
          popupAnchor:  [1, -24],
          iconUrl: 'assets/bin.jpg'
-     }
+//     }
     });
 
 function popupStyle(feature){
@@ -111,7 +126,7 @@ function popupStyle(feature){
 }
 
 function    pointToLayer(feature, latlng) {
-                return L.marker(latlng, popupStyle);
+                return L.marker(latlng, smallIcon);
             }
 
 function onEachPoint(feature, layer) {
@@ -121,9 +136,15 @@ function onEachPoint(feature, layer) {
   layer.bindPopup(popupContent);
            }
 
+function binstyle (feature) {
+//    return {color: feature.properties.color};
+    return {color: "blue"};
+  }
+
 var newbins = new L.LayerGroup();
  $.getJSON('./data/banes_park_litter_bin.geojson', function(binsnew) {
      my_json = L.geoJson(binsnew,{
+         style: binstyle,
            pointToLayer: pointToLayer,
            onEachFeature: onEachPoint
      });
