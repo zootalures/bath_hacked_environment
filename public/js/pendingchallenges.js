@@ -5,7 +5,10 @@ function PendingChallengeController ($scope){
     this.activeChallenges = {};
 
 
-    var map = L.map('map').setView([51.3755228, -2.375885], 13);
+     // Bath
+    // var map = L.map('map').setView([51.3755228, -2.375885], 13);
+    // Southdown
+    var map = L.map('map').setView([51.3700068,-2.3972867], 14);
 
     var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
@@ -42,7 +45,8 @@ function PendingChallengeController ($scope){
     }
 
     var wards = new L.LayerGroup();
-    $.getJSON('./data/ons_census_2011_ward.geojson', function (wardsadd) {
+//    $.getJSON('./data/ons_census_2011_ward.geojson', function (wardsadd) {
+    $.getJSON('./data/southdown_ward.geojson', function (wardsadd) {
         my_json = L.geoJson(wardsadd, {
           style: wardstyle,
         })
@@ -108,7 +112,9 @@ function PendingChallengeController ($scope){
 //        layers: [baselayers,overlays]
 //      });
     map.addLayer(osm);
+    map.addLayer(wards);
     map.addLayer(parks);
+    map.addLayer(newbins);
 
     L.control.layers(baselayers, overlays).addTo(map);
 
