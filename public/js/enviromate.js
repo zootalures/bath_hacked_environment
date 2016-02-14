@@ -2,7 +2,8 @@ function Enviromate() {
     return {
         restrict: "E",
         scope: {
-            mate: "="
+            mate: "=",
+            scale: "="
         },
         templateUrl: "/partials/enviromate.html"
     };
