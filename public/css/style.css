@@ -4,6 +4,15 @@
   background-color: rgb(135, 185, 37);
 }
 
+.Header_Bar h2 {
+  color:white;
+}
 
 
 
+.infobox {
+  background-color : #f7f7f7;
+  padding: 10px;
+  margin  :10px;
+  border-radius: 5px;
+}
