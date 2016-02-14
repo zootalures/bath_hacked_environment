@@ -51,7 +51,7 @@ function WardController($scope, $http, $window) {
     });
 
     var wards = new L.LayerGroup();
-    $.getJSON('./data/ons_census_2011_ward.geojson', function (wardsadd) {
+    $.getJSON('./data/southdown_ward.geojson', function (wardsadd) {
         L.geoJson(wardsadd).addTo(wards);
     });
 
@@ -127,6 +127,9 @@ function WardController($scope, $http, $window) {
 //        layers: [baselayers,overlays]
 //      });
     map.addLayer(osm);
+    map.addLayer(wards);
+    map.addLayer(parks);
+    map.addLayer(newbins);
 
     L.control.layers(baselayers, overlays).addTo(map);
 
