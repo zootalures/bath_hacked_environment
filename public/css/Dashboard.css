@@ -2,10 +2,6 @@
 
 .Header_Bar {
   background-color: rgb(135, 185, 37);
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  width: auto;
   height: 100px;
   z-index: 10;
 }
