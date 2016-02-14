@@ -6,20 +6,16 @@ function WardController($scope, $http, $window) {
     $scope.activeChallenges = {};
 
 
-    $scope.mate = {base: "high", co2: "low", sound:"high"};
+    $scope.mate = {base: "high", co2: "low", sound: "high"};
 
     $scope.scoreChart = {
         labels: ['Green Spaces', 'Litter', 'Noise', 'CO2'],
         type: 'StackedBar',
         data: [
-            [7.5,0.4, 2.5, 5.0],
+            [7.5, 0.4, 2.5, 5.0],
             [2.1, 1.0, 3.0, 5.2]
         ]
     };
-
-
-    var L = $window.L;
-
 
     var map = L.map('map').setView([51.3755228, -2.375885], 13);
 
@@ -32,34 +28,48 @@ function WardController($scope, $http, $window) {
 
     var parks = new L.LayerGroup();
 
-    $.getJSON('./data/banes_gss_amenity_grass.geojson').then(function (parkadd)  {
+    function parklabels(feature, layer) {
+//              layer.bindPopup("Here");
+//  return L.circleMarker(latlng, eqstyle).bindPopup(popupContent, popupOptions);
+        var popupContent = String(feature.properties.site_name);
+        layer.bindPopup(popupContent);
+    }
 
-        L.geoJson(parkadd).addTo(parks);
+    function parkstyle(feature) {
+//    return {color: feature.properties.color};
+        return {color: "red"};
+    }
+
+    $.getJSON('./data/banes_gss_amenity_grass.geojson', function (parkadd) {
+        L.geoJson(parkadd).addTo(parks, {
+//          style: parkstyle,
+            onEachFeature: parklabels
+        });
     });
 
     var wards = new L.LayerGroup();
-    $.getJSON('./data/ons_census_2011_ward.geojson', function (wardsadd)  {
+    $.getJSON('./data/ons_census_2011_ward.geojson', function (wardsadd) {
         L.geoJson(wardsadd).addTo(wards);
     });
 
     var bins = new L.LayerGroup();
-    $.getJSON('./data/banes_park_litter_bin.geojson', function (binsadd)  {
+    $.getJSON('./data/banes_park_litter_bin.geojson', function (binsadd) {
         L.geoJson(binsadd).addTo(bins);
     });
-    $.getJSON('./data/banes_park_dog_bin.geojson', function (binsadd)  {
+    $.getJSON('./data/banes_park_dog_bin.geojson', function (binsadd) {
         L.geoJson(binsadd).addTo(bins);
     });
 
     var smallIcon = new L.Icon({
-        options: {
-            iconSize: [27, 27],
-            iconAnchor: [13, 27],
-            popupAnchor:  [1, -24],
-            iconUrl: 'assets/bin.jpg'
-        }
+//     options: {
+        iconSize: [27, 27],
+        iconAnchor: [13, 27],
+        popupAnchor: [1, -24],
+        iconUrl: 'assets/bin.jpg'
+//     }
     });
 
-    function popupStyle(feature){
+    function popupStyle(feature) {
         return {
             radius: 8,
             weight: 1,
@@ -69,8 +79,8 @@ function WardController($scope, $http, $window) {
         }
     }
 
-    function    pointToLayer(feature, latlng) {
-        return L.marker(latlng, popupStyle);
+    function pointToLayer(feature, latlng) {
+        return L.marker(latlng, smallIcon);
     }
 
     function onEachPoint(feature, layer) {
@@ -80,9 +90,15 @@ function WardController($scope, $http, $window) {
         layer.bindPopup(popupContent);
     }
 
+    function binstyle(feature) {
+//    return {color: feature.properties.color};
+        return {color: "blue"};
+    }
+
     var newbins = new L.LayerGroup();
-    $.getJSON('./data/banes_park_litter_bin.geojson', function(binsnew) {
-        my_json = L.geoJson(binsnew,{
+    $.getJSON('./data/banes_park_litter_bin.geojson', function (binsnew) {
+        my_json = L.geoJson(binsnew, {
+            style: binstyle,
             pointToLayer: pointToLayer,
             onEachFeature: onEachPoint
         });
@@ -92,14 +108,14 @@ function WardController($scope, $http, $window) {
 
 
     var baselayers = {
-        "Base map" : osm
+        "Base map": osm
     };
 
     var overlays = {
-        "Wards" : wards,
-        "Amenity grass areas" : parks,
-        "Litter and dog bins" : bins,
-        "Litter and dog bins custom jpgs" : newbins
+        "Wards": wards,
+        "Amenity grass areas": parks,
+        "Litter and dog bins": bins,
+        "Litter and dog bins custom jpgs": newbins
     };
 
 //    var map = L.map('map',
