@@ -1,14 +1,19 @@
 
 
 .Header_Bar {
-  background-color: rgb(135, 185, 37);
+  background-color: #18bc9c;
 }
 
 .Header_Bar h2 {
   color:white;
 }
+.Header_Bar h2 a{
+  color:white;
+}
 
-
+.challenge-map {
+  height:300px;
+}
 
 .infobox {
   background-color : #f7f7f7;

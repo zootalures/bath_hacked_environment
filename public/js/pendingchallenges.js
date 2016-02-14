@@ -1,41 +1,11 @@
-function WardController($scope, $http, $window) {
+function PendingChallengeController ($scope){
 
     var self = this;
-    $scope.wardId = "southdown";
-    $scope.wardName = "Southdown";
-    $scope.activeChallenges = {};
+
+    this.activeChallenges = {};
 
 
-    $scope.mate = {base: "high", co2: "low", sound: "high"};
-
-    $scope.scoreChart = {
-        labels: ['Green Spaces', 'Litter', 'Noise', 'CO2'],
-        type: 'StackedBar',
-        colors : [{
-            fillOpacity: 1,
-            fillColor: 'lightgreen',
-            strokeColor: 'lightgreen',
-            highlightFill: 'green',
-            highlightFillOpacity:1,
-            highlightStroke: 'green'
-        },{
-            fillOpacity: 1,
-            fillColor: "#1a75ff",
-            strokeColor: '#1a75ff',
-
-        }],
-        options : {fillOpacity: 1},
-        data: [
-            [0.3, 0.0, 0.0, 1.0],
-            [7.5, 0.4, 2.5, 5.0]
-
-        ]
-    };
-
-     // Bath
-    // var map = L.map('map').setView([51.3755228, -2.375885], 13);
-    // Southdown
-    var map = L.map('map').setView([51.3700068,-2.3972867], 15);
+    var map = L.map('map').setView([51.3755228, -2.375885], 13);
 
     var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
@@ -72,7 +42,7 @@ function WardController($scope, $http, $window) {
     }
 
     var wards = new L.LayerGroup();
-    $.getJSON('./data/southdown_ward.geojson', function (wardsadd) {
+    $.getJSON('./data/ons_census_2011_ward.geojson', function (wardsadd) {
         my_json = L.geoJson(wardsadd, {
           style: wardstyle,
         })
@@ -138,11 +108,10 @@ function WardController($scope, $http, $window) {
 //        layers: [baselayers,overlays]
 //      });
     map.addLayer(osm);
-    map.addLayer(wards);
     map.addLayer(parks);
-    map.addLayer(newbins);
 
     L.control.layers(baselayers, overlays).addTo(map);
 
 
 }
+
