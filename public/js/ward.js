@@ -17,7 +17,10 @@ function WardController($scope, $http, $window) {
         ]
     };
 
-    var map = L.map('map').setView([51.3755228, -2.375885], 13);
+     // Bath
+    // var map = L.map('map').setView([51.3755228, -2.375885], 13);
+    // Southdown
+    var map = L.map('map').setView([51.3700068,-2.3972867], 15);
 
     var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
