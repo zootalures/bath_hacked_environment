@@ -29,22 +29,22 @@ function WardController($scope, $http, $window) {
     var parks = new L.LayerGroup();
 
     function parklabels(feature, layer) {
-//              layer.bindPopup("Here");
-//  return L.circleMarker(latlng, eqstyle).bindPopup(popupContent, popupOptions);
         var popupContent = String(feature.properties.site_name);
         layer.bindPopup(popupContent);
     }
 
     function parkstyle(feature) {
 //    return {color: feature.properties.color};
-        return {color: "red"};
+        return {color: "green"};
     }
 
     $.getJSON('./data/banes_gss_amenity_grass.geojson', function (parkadd) {
-        L.geoJson(parkadd).addTo(parks, {
-//          style: parkstyle,
+        my_json = L.geoJson(parkadd, {
+          style: parkstyle,
             onEachFeature: parklabels
         });
+
+        my_json.addTo(parks)
     });
 
     var wards = new L.LayerGroup();
