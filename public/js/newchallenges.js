@@ -2,9 +2,29 @@ function NewChallengeController ($scope){
 
     var self = this;
 
-    this.activeChallenges = {};
 
+    $scope.noiseChart  = {
+        labels: ['1/2015', '2/2015', '3/2015', '4/2015'],
+        type: 'Line',
+        colors : [{
+            fillOpacity:0.3,
+            fillColor: 'lightgreen',
+            strokeColor: 'lightgreen',
+            highlightFill: 'green',
+            highlightFillOpacity:0.3,
+            highlightStroke: 'green'
+        },{
+            fillOpacity: 0.3,
+            fillColor: "#1a75ff",
+            strokeColor: '#1a75ff',
 
+        }],
+        options : {fillOpacity: 0.3},
+        data: [
+            [2, 3, 4, 3]
+
+        ]
+    };
      // Bath
     // var map = L.map('map').setView([51.3755228, -2.375885], 13);
     // Southdown
