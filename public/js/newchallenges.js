@@ -5,39 +5,51 @@ function NewChallengeController ($scope){
     this.activeChallenges = {};
 
 
-    var map = L.map('map').setView([51.3755228, -2.375885], 13);
+     // Bath
+    // var map = L.map('map').setView([51.3755228, -2.375885], 13);
+    // Southdown
+    var map = L.map('map').setView([51.3700068,-2.3972867], 15);
 
     var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
     var osm = new L.TileLayer(osmUrl, {minZoom: 8, maxZoom: 20, attribution: osmAttrib});
 
-//  var binIcon = L.icon({iconUrl: './assets/bin.jpg'});
+//  var binIcon = L.icon({iconUrl: './assets/bin.png'});
 //    iconSize: [38, 95]
 
     var parks = new L.LayerGroup();
 
     function parklabels(feature, layer) {
-//              layer.bindPopup("Here");
-//  return L.circleMarker(latlng, eqstyle).bindPopup(popupContent, popupOptions);
         var popupContent = String(feature.properties.site_name);
         layer.bindPopup(popupContent);
     }
 
     function parkstyle(feature) {
 //    return {color: feature.properties.color};
-        return {color: "red"};
+        return {color: "green"};
     }
 
     $.getJSON('./data/banes_gss_amenity_grass.geojson', function (parkadd) {
-        L.geoJson(parkadd).addTo(parks, {
-//          style: parkstyle,
+        my_json = L.geoJson(parkadd, {
+          style: parkstyle,
             onEachFeature: parklabels
         });
+
+        my_json.addTo(parks)
     });
 
+    function wardstyle(feature) {
+//    return {color: feature.properties.color};
+        return {color: "blue",
+                fill: false};
+    }
+
     var wards = new L.LayerGroup();
-    $.getJSON('./data/ons_census_2011_ward.geojson', function (wardsadd) {
-        L.geoJson(wardsadd).addTo(wards);
+    $.getJSON('./data/southdown_ward.geojson', function (wardsadd) {
+        my_json = L.geoJson(wardsadd, {
+          style: wardstyle,
+        })
+        my_json.addTo(wards);
     });
 
     var bins = new L.LayerGroup();
@@ -48,27 +60,15 @@ function NewChallengeController ($scope){
         L.geoJson(binsadd).addTo(bins);
     });
 
-    var smallIcon = new L.Icon({
-//     options: {
+    var binIcon = new L.Icon({
         iconSize: [27, 27],
         iconAnchor: [13, 27],
         popupAnchor: [1, -24],
-        iconUrl: 'assets/bin.jpg'
-//     }
+        iconUrl: 'assets/bin.png'
     });
 
-    function popupStyle(feature) {
-        return {
-            radius: 8,
-            weight: 1,
-            opacity: 1,
-            fillOpacity: 0.8,
-            iconUrl: './assets/bin.jpg'
-        }
-    }
-
     function pointToLayer(feature, latlng) {
-        return L.marker(latlng, smallIcon);
+        return L.marker(latlng, {icon: binIcon});
     }
 
     function onEachPoint(feature, layer) {
@@ -86,13 +86,38 @@ function NewChallengeController ($scope){
     var newbins = new L.LayerGroup();
     $.getJSON('./data/banes_park_litter_bin.geojson', function (binsnew) {
         my_json = L.geoJson(binsnew, {
-            style: binstyle,
+//            style: binstyle,
             pointToLayer: pointToLayer,
             onEachFeature: onEachPoint
         });
 
         my_json.addTo(newbins);
     });
+
+    var speakerIcon = new L.Icon({
+//     options: {
+        iconSize: [27, 27],
+        iconAnchor: [13, 27],
+        popupAnchor: [1, -24],
+        iconUrl: 'assets/speaker.png'
+//     }
+    });
+
+    function pointToLayerNoise(feature, latlng) {
+        return L.marker(latlng, {icon: speakerIcon});
+    }
+
+    var noiselayer = new L.LayerGroup();
+    $.getJSON('./noise/noise.geojson', function (noisedata) {
+        my_json = L.geoJson(noisedata, {
+            style: binstyle,
+            pointToLayer: pointToLayerNoise,
+            onEachFeature: onEachPoint
+        });
+
+        my_json.addTo(noiselayer);
+    });
+
 
 
     var baselayers = {
@@ -102,7 +127,7 @@ function NewChallengeController ($scope){
     var overlays = {
         "Wards": wards,
         "Amenity grass areas": parks,
-        "Litter and dog bins": bins,
+        "Noise": noiselayer,
         "Litter and dog bins custom jpgs": newbins
     };
 
@@ -112,6 +137,10 @@ function NewChallengeController ($scope){
 //        layers: [baselayers,overlays]
 //      });
     map.addLayer(osm);
+    map.addLayer(wards);
+//    map.addLayer(parks);
+//    map.addLayer(newbins);
+    map.addLayer(noiselayer);
 
     L.control.layers(baselayers, overlays).addTo(map);
 }
