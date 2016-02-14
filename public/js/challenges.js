@@ -5,7 +5,10 @@ function ChallengeController ($scope){
     this.activeChallenges = {};
 
 
-    var map = L.map('map').setView([51.3755228, -2.375885], 13);
+     // Bath
+    // var map = L.map('map').setView([51.3755228, -2.375885], 13);
+    // Southdown
+    var map = L.map('map').setView([51.3700068,-2.3972867], 14);
 
     var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
@@ -23,8 +26,12 @@ function ChallengeController ($scope){
 
     function parkstyle(feature) {
 //    return {color: feature.properties.color};
-        return {color: "green"};
+        return {color: "green",
+                opacity: 0.5,
+                fillOpacity: 0.2 };
     }
+    // subtle green: #3fcd24
+    // lurid green: #3fff24
 
     $.getJSON('./data/banes_gss_amenity_grass.geojson', function (parkadd) {
         my_json = L.geoJson(parkadd, {
@@ -35,6 +42,21 @@ function ChallengeController ($scope){
         my_json.addTo(parks)
     });
 
+
+    var tweetIcon = new L.Icon({
+        iconSize: [27, 27],
+        iconAnchor: [13, 27],
+        popupAnchor: [1, -24],
+        iconUrl: 'assets/twitter-icon-1.png'
+    });
+
+    var marker1 = L.marker([51.3688228,-2.3959434], {icon: tweetIcon}).addTo(parks);
+    var marker1 = L.marker([51.3705275,-2.3980808], {icon: tweetIcon}).addTo(parks);
+    var marker1 = L.marker([51.3736647,-2.3922042], {icon: tweetIcon}).addTo(parks);
+
+
+
+
     function wardstyle(feature) {
 //    return {color: feature.properties.color};
         return {color: "blue",
@@ -42,7 +64,8 @@ function ChallengeController ($scope){
     }
 
     var wards = new L.LayerGroup();
-    $.getJSON('./data/ons_census_2011_ward.geojson', function (wardsadd) {
+//    $.getJSON('./data/ons_census_2011_ward.geojson', function (wardsadd) {
+    $.getJSON('./data/southdown_ward.geojson', function (wardsadd) {
         my_json = L.geoJson(wardsadd, {
           style: wardstyle,
         })
@@ -108,6 +131,7 @@ function ChallengeController ($scope){
 //        layers: [baselayers,overlays]
 //      });
     map.addLayer(osm);
+    map.addLayer(wards);
     map.addLayer(parks);
 
     L.control.layers(baselayers, overlays).addTo(map);
