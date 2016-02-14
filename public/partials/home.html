@@ -1,10 +1,11 @@
-
 <div class="row">
     <div ng-repeat="ward in wards" class="col-sm-4">
         <div>
             <a href="#/ward/{{ward.id}}">
-            <enviromate mate="ward.mate"/>
+                <enviromate mate="ward.mate"/>
+
             </a>
+            <div>{{ward.name}}</div>
         </div>
     </div>
 </div>
