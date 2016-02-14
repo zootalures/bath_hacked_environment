@@ -129,8 +129,7 @@ function WardController($scope, $http, $window) {
     var overlays = {
         "Wards": wards,
         "Amenity grass areas": parks,
-        "Litter and dog bins": bins,
-        "Litter and dog bins custom jpgs": newbins
+        "Litter bins": newbins
     };
 
 //    var map = L.map('map',

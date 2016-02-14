@@ -11,33 +11,42 @@ function ChallengeController ($scope){
     var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
     var osm = new L.TileLayer(osmUrl, {minZoom: 8, maxZoom: 20, attribution: osmAttrib});
 
-//  var binIcon = L.icon({iconUrl: './assets/bin.jpg'});
+//  var binIcon = L.icon({iconUrl: './assets/bin.png'});
 //    iconSize: [38, 95]
 
     var parks = new L.LayerGroup();
 
     function parklabels(feature, layer) {
-//              layer.bindPopup("Here");
-//  return L.circleMarker(latlng, eqstyle).bindPopup(popupContent, popupOptions);
         var popupContent = String(feature.properties.site_name);
         layer.bindPopup(popupContent);
     }
 
     function parkstyle(feature) {
 //    return {color: feature.properties.color};
-        return {color: "red"};
+        return {color: "green"};
     }
 
     $.getJSON('./data/banes_gss_amenity_grass.geojson', function (parkadd) {
-        L.geoJson(parkadd).addTo(parks, {
-//          style: parkstyle,
+        my_json = L.geoJson(parkadd, {
+          style: parkstyle,
             onEachFeature: parklabels
         });
+
+        my_json.addTo(parks)
     });
+
+    function wardstyle(feature) {
+//    return {color: feature.properties.color};
+        return {color: "blue",
+                fill: false};
+    }
 
     var wards = new L.LayerGroup();
     $.getJSON('./data/ons_census_2011_ward.geojson', function (wardsadd) {
-        L.geoJson(wardsadd).addTo(wards);
+        my_json = L.geoJson(wardsadd, {
+          style: wardstyle,
+        })
+        my_json.addTo(wards);
     });
 
     var bins = new L.LayerGroup();
@@ -48,27 +57,15 @@ function ChallengeController ($scope){
         L.geoJson(binsadd).addTo(bins);
     });
 
-    var smallIcon = new L.Icon({
-//     options: {
+    var binIcon = new L.Icon({
         iconSize: [27, 27],
         iconAnchor: [13, 27],
         popupAnchor: [1, -24],
-        iconUrl: 'assets/bin.jpg'
-//     }
+        iconUrl: 'assets/bin.png'
     });
 
-    function popupStyle(feature) {
-        return {
-            radius: 8,
-            weight: 1,
-            opacity: 1,
-            fillOpacity: 0.8,
-            iconUrl: './assets/bin.jpg'
-        }
-    }
-
     function pointToLayer(feature, latlng) {
-        return L.marker(latlng, smallIcon);
+        return L.marker(latlng, {icon: binIcon});
     }
 
     function onEachPoint(feature, layer) {
@@ -86,7 +83,7 @@ function ChallengeController ($scope){
     var newbins = new L.LayerGroup();
     $.getJSON('./data/banes_park_litter_bin.geojson', function (binsnew) {
         my_json = L.geoJson(binsnew, {
-            style: binstyle,
+//            style: binstyle,
             pointToLayer: pointToLayer,
             onEachFeature: onEachPoint
         });
@@ -102,8 +99,7 @@ function ChallengeController ($scope){
     var overlays = {
         "Wards": wards,
         "Amenity grass areas": parks,
-        "Litter and dog bins": bins,
-        "Litter and dog bins custom jpgs": newbins
+        "Litter bins": newbins
     };
 
 //    var map = L.map('map',
@@ -112,6 +108,10 @@ function ChallengeController ($scope){
 //        layers: [baselayers,overlays]
 //      });
     map.addLayer(osm);
+    map.addLayer(parks);
 
     L.control.layers(baselayers, overlays).addTo(map);
+
+
 }
+
