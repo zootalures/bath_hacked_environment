@@ -26,7 +26,7 @@ function WardController($scope, $http, $window) {
     var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
     var osm = new L.TileLayer(osmUrl, {minZoom: 8, maxZoom: 20, attribution: osmAttrib});
 
-//  var binIcon = L.icon({iconUrl: './assets/bin.jpg'});
+//  var binIcon = L.icon({iconUrl: './assets/bin.png'});
 //    iconSize: [38, 95]
 
     var parks = new L.LayerGroup();
@@ -76,7 +76,7 @@ function WardController($scope, $http, $window) {
         iconSize: [27, 27],
         iconAnchor: [13, 27],
         popupAnchor: [1, -24],
-        iconUrl: 'assets/bin.jpg'
+        iconUrl: 'assets/bin.png'
     });
 
     function pointToLayer(feature, latlng) {
