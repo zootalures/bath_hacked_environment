@@ -1,215 +1,47 @@
 <!DOCTYPE html>
-<html>
-<head><title>Enviromate </title>
+<html ng-app="beastie">
+<head><title>Envormates</title>
     <link rel="stylesheet" href="/stylesheets/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css"/>
+    <link rel="stylesheet" href="/bower_components/angular-chart.js/angular-chart.css"/>
 
+    <script src="/bower_components/leaflet/dist/leaflet-src.js"></script>
     <script src="/bower_components/angular/angular.js"></script>
-    <script src="/bower_components/angular-ui-bootstrap/"></script>
+    <script src="/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="/bower_components/angular-route/angular-route.min.js"></script>
+    <script src="/bower_components/Chart.js/Chart.js"></script>
+    <script src="/bower_components/Chart.StackedBar.js/src/Chart.Stackedbar.js"></script>
+
+    <script src="/bower_components/angular-chart.js/angular-chart.js"></script>
+
+    <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="/bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.js"></script>
+
+    <script src="/js/enviromate.js"></script>
+    <script src="/js/home.js"></script>
+    <script src="/js/ward.js"></script>
+    <script src="/js/app.js"></script>
 
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
     <!--  <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script> -->
-    <script src="/bower_components/leaflet/dist/leaflet-src.js"></script>
     <script language="Javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
-
-    <div class="row">
-        <div class="column col-md-6"><img src="/blobs/blob_high_base.png">
-            <img style="position:absolute; left :5px;" src="/blobs/CO2_low.png">
-            <img style="position:absolute; left :0px;" src="/blobs/sound_high.png">
+<div class="nav navbar-default Header_Bar ">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <h2>Enviromates</h2>
         </div>
-        <div class="column col-md-6">
-            <div id="map" style="height:500px"></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="column col-md-6"><h3>Stats</h3>
-            <a class="button btn-xs"> Compare</a>
-
-            <div id="score_chart"></div>
-
-        </div>
-        <div class="column col-md-6">
-            <h4>Current Challenges</h4>
-            <ul>
-                <li>5 people are currently doing the <a href="tweet_in_the_park.html">Tweet in the Park </a> challenge <a  class="button btn-xs" href="tweet_in_the_park.html">Join
-                    In!</a>
-                </li>
-
-                <li>50 households are trying to <a href="">Reduce their carbon footprint</a>, <a href="">Join
-                    In!</a>
-                </li>
-                <li>25 housholds are trying to <a href="">Recycle More</a>, <a href="">Join In!</a></li>
-                <li>25 housholds are trying to <a href="">Recycle More</a>, <a href="">Join In!</a></li>
-            </ul>
-            <h4>Completed Challenges</h4>
-            <h5>Last Month</h5>
-            <ul>
-                <li> 10 people joined in the <a href="">These Boots are Made for Walking</a> challenge</li>
-
-            </ul>
-            <h4>Start a new Challenge</h4>
-            (Call to Action)
-            <ul>
-                <li><b>Litter a problem?</b>help reduce litter with a <a href="">Binspection </a> challenge</li>
-                <li><b>Noisy Neighbors?</b> Reduce noise polution with the  <a href="">Shhhhh </a> Challenge</li>
-            </ul>
-
-        </div>
-
     </div>
 </div>
 
-<script>
-<<<<<<< HEAD
 
-=======
-    var map = L.map('map').setView([51.3755228, -2.375885], 13);
+<div class="container-fluid ">
+    <div ng-view>
+    </div>
+</div>
 
-    var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-    var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
-    var osm = new L.TileLayer(osmUrl, {minZoom: 8, maxZoom: 20, attribution: osmAttrib});
-
-//  var binIcon = L.icon({iconUrl: './assets/bin.jpg'});
-//    iconSize: [38, 95]
-
-  var parks = new L.LayerGroup();
-
-function parklabels(feature, layer) {
-//              layer.bindPopup("Here");
-//  return L.circleMarker(latlng, eqstyle).bindPopup(popupContent, popupOptions);
-  var popupContent = String(feature.properties.site_name);
-  layer.bindPopup(popupContent);
-           }
-
-function parkstyle (feature) {
-//    return {color: feature.properties.color};
-    return {color: "red"};
-  }
-
-    $.getJSON('./data/banes_gss_amenity_grass.geojson', function (parkadd)  {
-        L.geoJson(parkadd).addTo(parks, {
-//          style: parkstyle,
-          onEachFeature: parklabels
-        });
-    });
-
-  var wards = new L.LayerGroup();
-    $.getJSON('./data/ons_census_2011_ward.geojson', function (wardsadd)  {
-        L.geoJson(wardsadd).addTo(wards);
-    });
-
-  var bins = new L.LayerGroup();
-     $.getJSON('./data/banes_park_litter_bin.geojson', function (binsadd)  {
-     L.geoJson(binsadd).addTo(bins);
-    });
-    $.getJSON('./data/banes_park_dog_bin.geojson', function (binsadd)  {
-        L.geoJson(binsadd).addTo(bins);
-    });
-
-var smallIcon = new L.Icon({
-//     options: {
-         iconSize: [27, 27],
-         iconAnchor: [13, 27],
-         popupAnchor:  [1, -24],
-         iconUrl: 'assets/bin.jpg'
-//     }
-    });
-
-function popupStyle(feature){
-  return {
-    radius: 8,
-    weight: 1,
-    opacity: 1,
-    fillOpacity: 0.8,
-    iconUrl: './assets/bin.jpg'
-  }
-}
-
-function    pointToLayer(feature, latlng) {
-                return L.marker(latlng, smallIcon);
-            }
-
-function onEachPoint(feature, layer) {
-//              layer.bindPopup("Here");
-//  return L.circleMarker(latlng, eqstyle).bindPopup(popupContent, popupOptions);
-  var popupContent = String(feature.properties.SITE_NAME);
-  layer.bindPopup(popupContent);
-           }
-
-function binstyle (feature) {
-//    return {color: feature.properties.color};
-    return {color: "blue"};
-  }
-
-var newbins = new L.LayerGroup();
- $.getJSON('./data/banes_park_litter_bin.geojson', function(binsnew) {
-     my_json = L.geoJson(binsnew,{
-         style: binstyle,
-           pointToLayer: pointToLayer,
-           onEachFeature: onEachPoint
-     });
-
- my_json.addTo(newbins);
- });
-
-
-  var baselayers = {
-    "Base map" : osm
-  };
-
-  var overlays = {
-    "Wards" : wards,
-    "Amenity grass areas" : parks,
-    "Litter and dog bins" : bins,
-    "Litter and dog bins custom jpgs" : newbins
-  };
-
-//    var map = L.map('map',
-//      { center: [51.3755228, -2.375885],
-//        zoom: 13,
-//        layers: [baselayers,overlays]
-//      });
-    map.addLayer(osm);
-
-  L.control.layers(baselayers, overlays).addTo(map);
->>>>>>> origin/master
-
-</script>
-
-<script>
-    google.charts.load('current', {'packages': ['corechart']});
-    google.charts.setOnLoadCallback(drawChart);
-
-    function drawChart() {
-
-
-        var data = google.visualization.arrayToDataTable([
-            ["Aspect", "Score","Target", { role: 'style' }],
-            ['Green Spaces', 8,8.5, 'color:green'],            // RGB value
-            ['Litter', 0.5, 0.3, 'color:red'],            // English color name
-            ['Noise', 3, 2.0 , 'color:red'],
-            ['CO2', 5, 5, 'color: orange' ] // CSS-style declaration
-        ])
-
-
-        // Set chart options
-        var options = {
-            seriesType: 'bars',
-            series: {1: {type: 'scatter'}},
-            'width': 500,
-            'height': 300
-        };
-
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.ComboChart(document.getElementById('score_chart'));
-        chart.draw(data, options);
-    }
-
-</script>
 </body>
 </html>
