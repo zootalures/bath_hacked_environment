@@ -69,6 +69,8 @@
     var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
     var osm = new L.TileLayer(osmUrl, {minZoom: 8, maxZoom: 20, attribution: osmAttrib});
 
+//  var binIcon = L.icon({iconUrl: './assets/bin.jpg'});
+//    iconSize: [38, 95]
 
   var parks = new L.LayerGroup();
 
@@ -89,6 +91,47 @@
         L.geoJson(binsadd).addTo(bins);
     });
 
+var smallIcon = new L.Icon({
+     options: {
+         iconSize: [27, 27],
+         iconAnchor: [13, 27],
+         popupAnchor:  [1, -24],
+         iconUrl: 'assets/bin.jpg'
+     }
+    });
+
+function popupStyle(feature){
+  return {
+    radius: 8,
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8,
+    iconUrl: './assets/bin.jpg'
+  }
+}
+
+function    pointToLayer(feature, latlng) {
+                return L.marker(latlng, popupStyle);
+            }
+
+function onEachPoint(feature, layer) {
+//              layer.bindPopup("Here");
+//  return L.circleMarker(latlng, eqstyle).bindPopup(popupContent, popupOptions);
+  var popupContent = String(feature.properties.SITE_NAME);
+  layer.bindPopup(popupContent);
+           }
+
+var newbins = new L.LayerGroup();
+ $.getJSON('./data/banes_park_litter_bin.geojson', function(binsnew) {
+     my_json = L.geoJson(binsnew,{
+           pointToLayer: pointToLayer,
+           onEachFeature: onEachPoint
+     });
+
+ my_json.addTo(newbins);
+ });
+
+
   var baselayers = {
     "Base map" : osm
   };
@@ -96,7 +139,8 @@
   var overlays = {
     "Wards" : wards,
     "Amenity grass areas" : parks,
-    "Litter and dog bins" : bins
+    "Litter and dog bins" : bins,
+    "Litter and dog bins custom jpgs" : newbins
   };
 
 //    var map = L.map('map',
