@@ -50,9 +50,18 @@ function WardController($scope, $http, $window) {
         my_json.addTo(parks)
     });
 
+    function wardstyle(feature) {
+//    return {color: feature.properties.color};
+        return {color: "blue",
+                fill: false};
+    }
+
     var wards = new L.LayerGroup();
     $.getJSON('./data/southdown_ward.geojson', function (wardsadd) {
-        L.geoJson(wardsadd).addTo(wards);
+        my_json = L.geoJson(wardsadd, {
+          style: wardstyle,
+        })
+        my_json.addTo(wards);
     });
 
     var bins = new L.LayerGroup();
@@ -63,27 +72,15 @@ function WardController($scope, $http, $window) {
         L.geoJson(binsadd).addTo(bins);
     });
 
-    var smallIcon = new L.Icon({
-//     options: {
+    var binIcon = new L.Icon({
         iconSize: [27, 27],
         iconAnchor: [13, 27],
         popupAnchor: [1, -24],
         iconUrl: 'assets/bin.jpg'
-//     }
     });
 
-    function popupStyle(feature) {
-        return {
-            radius: 8,
-            weight: 1,
-            opacity: 1,
-            fillOpacity: 0.8,
-            iconUrl: './assets/bin.jpg'
-        }
-    }
-
     function pointToLayer(feature, latlng) {
-        return L.marker(latlng, smallIcon);
+        return L.marker(latlng, {icon: binIcon});
     }
 
     function onEachPoint(feature, layer) {
@@ -101,7 +98,7 @@ function WardController($scope, $http, $window) {
     var newbins = new L.LayerGroup();
     $.getJSON('./data/banes_park_litter_bin.geojson', function (binsnew) {
         my_json = L.geoJson(binsnew, {
-            style: binstyle,
+//            style: binstyle,
             pointToLayer: pointToLayer,
             onEachFeature: onEachPoint
         });
